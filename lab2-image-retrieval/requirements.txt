@@ -1,0 +1,9 @@
+Flask==2.0.3
+Flask_HTTPAuth==4.6.0
+imageio==2.9.0
+numpy==1.21.5
+Pillow==9.1.0
+scikit_learn==1.1.0
+scipy==1.7.3
+tensorflow==1.14.0
+Werkzeug==2.0.3

@@ -1,0 +1,554 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Image Search Engine</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+<meta http-equiv='cache-control' content="no-cache, must-revalidate, post-check=0, pre-check=0">
+<meta http-equiv='expires' content='0'>
+<meta http-equiv='pragma' content='no-cache'>
+
+<meta http-equiv="cache-control" content="max-age=0" />
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+<meta http-equiv="pragma" content="no-cache" />
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+<script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.js"></script>
+<script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
+
+</head>
+
+<body style="background: white;>
+
+    <div class="navbar">
+        <div class="navbar-inner" style="background: cornflowerblue">
+            <h1 class="text-center" style="color:white;"><b>相似图片搜索系统 </b>&nbsp;&nbsp;&nbsp;
+	    </h1>
+
+        </div>
+    </div>
+    <div><br></br><br></br>
+    </div>
+
+
+    <center></center>
+
+
+    <div id="main" class="container">
+        <table class="table" style="background: white;border: 1px solid beige;box-shadow: 3px 5px 15px 0px rgba(0, 0, 0, 0.2), 3px 5px 15px 0 rgba(0, 0, 0, 0.19);
+">
+             <tr style="background: cornflowerblue;"><td style="color: white"><b>上传你的图片</b></td><td><b></b></td></tr>
+            <tr><td><form method=post enctype=multipart/form-data>
+                        <!--<input data-bind="value: title" type="text" id="inputTask" placeholder="Path to the image" style="width: 150px;">-->
+			<input type="file" name="file" id="file" required onchange="uploadPicture(this)" >
+
+                <img id="picImg" src="" width="200" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type=submit value ="搜索相似图片!" onclick="fun()"> <button onclick="toFavorite()" style="margin: 10px">查看我的收藏</button>
+
+        </form></td><td><b></b></td></tr>
+
+
+                <tr id="row1" style="display:none;"><td><a href=""><button id="clear" style="display:none;">清空</button></a></td><td></td>
+
+            </tr>
+        </table>
+
+
+    </div>
+    <center>
+    <img id="load" src="/images/ajax-loader.gif" style="height:100px;weight:100px;display:none;" >
+    </center>
+    <div id="main" class="container">
+       <table id="table" class="table" style="background: white; border: 1px ;display:none;" ><tbody>
+       <p style="display: none" id="overview">以下为9张最相似的图片</p>
+       <select id="select" style="display: none" onclick="handleSelect()">
+                    <option>请选择标签</option>
+
+                    <option>animals</option>
+                    <option>baby</option>
+                    <option>bird</option>
+                    <option>car</option>
+                    <option>clouds</option>
+                    <option>dog</option>
+                    <option>female</option>
+                    <option>flower</option>
+                    <option>food</option>
+                    <option>indoor</option>
+                    <option>lake</option>
+                    <option>male</option>
+                    <option>night</option>
+                    <option>people</option>
+                    <option>plant_life</option>
+                    <option>portrait</option>
+                    <option>river</option>
+                    <option>sea</option>
+                    <option>sky</option>
+                    <option>structures</option>
+                    <option>sunset</option>
+                    <option>transport</option>
+                    <option>tree</option>
+                    <option>water</option>
+
+                </select>
+        <tr><td style="
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 200px;
+    height: 200px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    border-left-width: 1px;
+    border-bottom-width: 1px;border-right-width: 1px;background: white;
+">
+    		<img id="img0" src="" alt="Norway" style="
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 200px;
+    height: 200px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 0px;
+    padding-left: 5px;
+    border-left-width: 0px;
+    border-bottom-width: 0px;border-right-width: 0px;
+" width="200" height="200">
+            <button id="img0B" style="background: cornflowerblue;color: white" onclick="favorite('img0')">收藏 ❤</button>
+                 <p id="tag0" style="background: cornflowerblue;color: white;margin: 10px"></p>
+
+             </td>
+
+             <td style="
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 200px;
+    height: 200px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    border-left-width: 1px;
+    border-bottom-width: 1px;border-right-width: 1px;background: white;
+">
+    		<img id="img1" src="" alt="Norway" style="
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 200px;
+    height: 200px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 0px;
+    padding-left: 5px;
+    border-left-width: 0px;
+    border-bottom-width: 0px;border-right-width: 0px;
+
+" width="200" height="200">
+            <button id="img1B" style="background: cornflowerblue;color: white" onclick="favorite('img1')">收藏 ❤</button>
+                 <p id="tag1" style="background: cornflowerblue;color: white;margin: 10px"></p>
+
+             </td>
+             <td style="
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 200px;
+    height: 200px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    border-left-width: 1px;
+    border-bottom-width: 1px;border-right-width: 1px;background: white;
+">
+    		<img id="img2" src="" alt="Norway" style="
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 200px;
+    height: 200px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 0px;
+    padding-left: 5px;
+    border-left-width: 0px;
+    border-bottom-width: 0px;border-right-width: 0px;
+" width="200" height="200">
+            <button id="img2B" style="background: cornflowerblue;color: white" onclick="favorite('img2')">收藏 ❤</button>
+                 <p id="tag2" style="background: cornflowerblue;color: white;margin: 10px"></p>
+
+             </td>
+         </tr>
+         <tr style="background: white;"><td style="
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 200px;
+    height: 200px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    border-left-width: 1px;
+    border-bottom-width: 1px;border-right-width: 1px;background: white;
+">
+    		<img id="img3" src="" alt="Norway" style="
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 200px;
+    height: 200px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 0px;
+    padding-left: 5px;
+    border-left-width: 0px;
+    border-bottom-width: 0px;border-right-width: 0px;
+" width="200" height="200">
+            <button id="img3B" style="background: cornflowerblue;color: white" onclick="favorite('img3')">收藏 ❤</button>
+                 <p id="tag3" style="background: cornflowerblue;color: white;margin: 10px"></p>
+
+             </td>
+             <td style="
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 200px;
+    height: 200px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    border-left-width: 1px;
+    border-bottom-width: 1px;border-right-width: 1px;background: white;
+">
+    		<img id="img4" src="" alt="Norway" style="
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 200px;
+    height: 200px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 0px;
+    padding-left: 5px;
+    border-left-width: 0px;
+    border-bottom-width: 0px;border-right-width: 0px;
+" width="200" height="200">
+            <button id="img4B" style="background: cornflowerblue;color: white" onclick="favorite('img4')">收藏 ❤</button>
+                 <p id="tag4" style="background: cornflowerblue;color: white;margin: 10px"></p>
+
+             </td>
+             <td style="
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 200px;
+    height: 200px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    border-left-width: 1px;
+    border-bottom-width: 1px;border-right-width: 1px;background: white;
+">
+    		<img id="img5" src="" alt="Norway" style="
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 200px;
+    height: 200px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 0px;
+    padding-left: 5px;
+    border-left-width: 0px;
+    border-bottom-width: 0px;border-right-width: 0px;
+" width="200" height="200">
+            <button id="img5B" style="background: cornflowerblue;color: white" onclick="favorite('img5')">收藏 ❤</button>
+                 <p id="tag5" style="background: cornflowerblue;color: white;margin: 10px"></p>
+
+             </td>
+         </tr>
+	<tr><td style="
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 200px;
+    height: 200px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    border-left-width: 1px;
+    border-bottom-width: 1px;border-right-width: 1px;background: white;
+">
+    		<img id="img6" src="" alt="Norway" style="
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 200px;
+    height: 200px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 0px;
+    padding-left: 5px;
+    border-left-width: 0px;
+    border-bottom-width: 0px;border-right-width: 0px;
+" width="200" height="200">
+            <button id="img6B" style="background: cornflowerblue;color: white" onclick="favorite('img6')">收藏 ❤</button>
+        <p id="tag6" style="background: cornflowerblue;color: white;margin: 10px"></p>
+
+             </td>
+             <td style="
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 200px;
+    height: 200px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    border-left-width: 1px;
+    border-bottom-width: 1px;border-right-width: 1px;background: white;
+">
+    		<img id="img7" src="" alt="Norway" style="
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 200px;
+    height: 200px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 0px;
+    padding-left: 5px;
+    border-left-width: 0px;
+    border-bottom-width: 0px;border-right-width: 0px;
+" width="200" height="200">
+            <button id="img7B" style="background: cornflowerblue;color: white" onclick="favorite('img7')">收藏 ❤</button>
+                 <p id="tag7" style="background: cornflowerblue;color: white;margin: 10px"></p>
+
+             </td>
+             <td style="
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 200px;
+    height: 200px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    border-left-width: 1px;
+    border-bottom-width: 1px;border-right-width: 1px;background: white;
+">
+    		<img id="img8" src="" alt="Norway" style="
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 200px;
+    height: 200px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 0px;
+    padding-left: 5px;
+    border-left-width: 0px;
+    border-bottom-width: 0px;border-right-width: 0px;
+" width="200" height="200">
+            <button id="img8B" style="background: cornflowerblue;color: white" onclick="favorite('img8')">收藏 ❤</button>
+                 <p id="tag8" style="background: cornflowerblue;color: white;margin: 10px"></p>
+
+             </td>
+         </tr></tbody>
+       </table>
+
+
+
+</div>
+
+
+
+
+
+    <script type="text/javascript">
+        var res = {};
+	function myFunction(){
+
+        document.getElementById("predictedResult").innerHTML= "";
+        $('#clear').hide();
+	}
+    function toFavorite(){
+        window.location.href = "/favorite"
+    }
+    function favorite(item){
+         var favoriteList = JSON.parse(localStorage.getItem("favorite"));
+            localStorage.removeItem("favorite")
+            if(favoriteList===null){
+                favoriteList = []
+            }
+            var id = item+"B"
+            if(document.getElementById(id).innerHTML === "收藏 ❤"){
+                favoriteList.push(document.getElementById(item).src);
+                document.getElementById(id).innerHTML = "取消收藏 ♡";
+                var formData = new FormData();
+                formData.append("url",document.getElementById(item).src.split("result/")[1])
+                console.log(formData)
+                console.log(document.getElementById(item).src.split("result/"))
+                $.ajax({
+                    url: 'addFavorite',
+                    type: 'POST',
+                    data: formData,
+                    cache: false,
+                     contentType: false,
+                     enctype: 'multipart/form-data',
+                     processData: false,
+
+                 success:function (response) {
+                     console.log(response)
+                 }});
+                alert("收藏成功！")
+
+            }
+            else{
+                var index = favoriteList.indexOf(document.getElementById(item).src);
+                favoriteList.splice(index,1)
+                document.getElementById(id).innerHTML = "收藏 ❤";
+                alert("取消收藏成功！")
+            }
+
+            localStorage.setItem("favorite",JSON.stringify(favoriteList));
+    }
+    function uploadPicture(){
+        var reader = new FileReader();
+        pic = document.getElementById('file').files[0];
+        reader.readAsDataURL(pic);
+        reader.onload = function (e) {
+            document.getElementById('picImg').src=this.result;
+        };
+    }
+    function handleSelect(){
+        var obj = document.getElementById("select")
+        var index = document.getElementById("select").options.selectedIndex
+        var text = obj[index].text
+        console.log(text)
+        if(text !== "请选择标签"){
+            for(var i=0; i<9; i++){
+                var id = "tag" + i;
+                var img_id = "img" + i;
+
+                if(res.tags[i] != text){
+                    document.getElementById(img_id).style.visibility= "hidden"
+                    document.getElementById(id).style.visibility= "hidden"
+                    document.getElementById(img_id+"B").style.visibility= "hidden"
+                }
+                else{
+                    document.getElementById(img_id).style.visibility= "visible"
+                    document.getElementById(id).style.visibility= "visible"
+                    document.getElementById(img_id+"B").style.visibility= "visible"
+                }
+            }
+        }
+        else{
+            for(var i=0; i<9; i++) {
+                var id = "tag" + i;
+                var img_id = "img" + i;
+                document.getElementById(img_id).style.visibility= "visible"
+                document.getElementById(id).style.visibility= "visible"
+                document.getElementById(img_id+"B").style.visibility= "visible"
+            }
+        }
+    }
+
+    function fun(){
+		    $('#load').show();
+   		    $("form").submit(function(evt){
+		//$('#loader-icon').show();
+		    evt.preventDefault();
+                //$('#loader-icon').show();
+     		var formData = new FormData($(this)[0]);
+   		    $.ajax({
+                 url: 'imgUpload',
+                type: 'POST',
+                 data: formData,
+                 //async: false,
+                 cache: false,
+                 contentType: false,
+                 enctype: 'multipart/form-data',
+                 processData: false,
+                 success: function (response) {
+                     res = response
+             $('#load').hide();
+             $('#row1').show();
+             $('#overview').show();
+             $('#select').show();
+
+		  //$('#clear').show();
+                  //console.log(response[1]);
+        	  //document.getElementById("predictedResult").innerHTML= response;
+                     var favoriteList = JSON.parse(localStorage.getItem("favorite"));
+                     if(favoriteList === null)
+                         favoriteList = []
+                     console.log(favoriteList)
+                     console.log( favoriteList instanceof Array)
+                     console.log(response)
+                  document.getElementById("img0").src = response.image0;
+                  if(favoriteList.indexOf(document.getElementById("img0").src) != -1) {
+                      document.getElementById('img0B').innerHTML = "取消收藏 ♡";
+                      // document.getElementById('img0B').onclick= cancleFavorite("img0");
+                  }
+                      document.getElementById('tag0').innerHTML = response.tags[0];
+                      document.getElementById('tag1').innerHTML = response.tags[1];
+                      document.getElementById('tag2').innerHTML = response.tags[2];
+                      document.getElementById('tag3').innerHTML = response.tags[3];
+                      document.getElementById('tag4').innerHTML = response.tags[4];
+                      document.getElementById('tag5').innerHTML = response.tags[5];
+                      document.getElementById('tag6').innerHTML = response.tags[6];
+                      document.getElementById('tag7').innerHTML = response.tags[7];
+                      document.getElementById('tag8').innerHTML = response.tags[8];
+
+    		        document.getElementById("img1").src = response.image1;
+                     document.getElementById("img2").src = response.image2;
+                     document.getElementById("img3").src = response.image3;
+                      document.getElementById("img4").src = response.image4;
+                      document.getElementById("img5").src = response.image5;
+                      document.getElementById("img6").src = response.image6;
+                      document.getElementById("img7").src = response.image7;
+                      document.getElementById("img8").src = response.image8;
+
+                  if(favoriteList.indexOf(document.getElementById("img1").src) != -1) {
+                      document.getElementById('img1B').innerHTML = "取消收藏 ♡"
+                  }
+
+                  if(favoriteList.indexOf(document.getElementById("img2").src) != -1) {
+                     document.getElementById('img2B').innerHTML = "取消收藏 ♡"
+                  }
+
+                  if(favoriteList.indexOf(document.getElementById("img3").src) != -1) {
+                      document.getElementById('img3B').innerHTML = "取消收藏 ♡"
+                  }
+
+                  if(favoriteList.indexOf( document.getElementById("img4").src) != -1) {
+                      document.getElementById('img4B').innerHTML = "取消收藏 ♡"
+                  }
+
+                  if(favoriteList.indexOf(document.getElementById("img5").src) != -1) {
+                      document.getElementById('img5B').innerHTML = "取消收藏 ♡"
+                  }
+
+                  if(favoriteList.indexOf(document.getElementById("img6").src) != -1) {
+                      document.getElementById('img6B').innerHTML = "取消收藏 ♡"
+                  }
+
+                  if(favoriteList.indexOf(document.getElementById("img7").src) != -1) {
+                      document.getElementById('img7B').innerHTML = "取消收藏 ♡"
+                  }
+
+                  if(favoriteList.indexOf(document.getElementById("img8").src) != -1) {
+                      document.getElementById('img8B').innerHTML = "取消收藏 ♡"
+                  }
+
+                  $('#table').show();
+		   $('#clear').show();
+
+
+      		 }
+   		});
+   return false;
+ })};
+
+
+
+    </script>
+</body>
+</html>

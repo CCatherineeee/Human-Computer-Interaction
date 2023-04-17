@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div style="background: white">
+     <div class="navbar-inner" style="background: cornflowerblue">
+            <h1 class="text-center" style="color:white;text-align: center"><b>相似图片搜索系统 </b>&nbsp;&nbsp;&nbsp;
+	    </h1>
+
+        </div>
+    </div>
+    <div><br></br><br></br></div>
+    </div>
+
+    <div id="main" class="container">
+        <table class="table" style="">
+             <tr style="color: cornflowerblue;"><td style="width: 100%;text-align: center"><b>我的收藏</b></td><td><b></b></td></tr>
+            <tr><td>
+            </td>
+            </tr>
+        </table>
+        <div id="imgBox">
+		</div>
+    </div>
+</div>
+
+</body>
+</html>
+<script>
+    var mainStr = ""
+    //自定义数组
+    var mainArr = JSON.parse(localStorage.getItem("favorite"))
+    for (var i = 0; i < mainArr.length; i++) {
+        var imgBox = document.getElementById("imgBox");
+        imgBox.innerHTML += "<img id='img" + i + "' width='200' height='200' style='margin: 20px' '/>";
+        var imgObjPreview = document.getElementById("img"+i);
+        imgObjPreview.src = "favorite/" + mainArr[i].split("result/")[1];
+        console.log(imgObjPreview.src)
+    };
+    console.log(mainArr)
+</script>
